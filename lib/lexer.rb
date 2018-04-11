@@ -36,6 +36,10 @@ class Lexer
         tokens << { type: :STRING, value: string }
 
         i += string.size
+      elsif operator = chunk[/\A[(\+|-|\*|\/]/]
+        tokens << { type: :OPERATOR, value: operator }
+
+        i += 1
       elsif chunk.match(/\A /)
         i += 1
       elsif newline = chunk[/\A\n/]

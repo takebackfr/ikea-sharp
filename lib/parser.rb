@@ -24,24 +24,44 @@ class Parser
 
     tree = []
     tokens.each do |line|
-      # Get all identifiers names
-      identifiers_names = line.select { |token| token[:type] == :IDENTIFIER }
-      # Get the identifier's arguments
-      arguments = line.split_with_token_type(:IDENTIFIER)[1..-1]
-
-      # Combine identifiers and arguments in a same structure
-      line_tree = []
-      identifiers_names.size.times do |i|
-        line_tree << {
-          identifier: identifiers_names[i],
-          value: arguments[i]
-        }
+      unless (new_line = parse_methods(line)).nil?
+        tree << new_line
       end
-
-      # Add the line's tree to the global tree
-      tree << line_tree
     end
 
     tree
+  end
+
+  private
+
+  # Parse methods like puts
+  def parse_methods(line)
+    line.each do |token|
+      next unless token[:type] == :IDENTIFIER
+
+      return {
+        identifier: token,
+        value: parse_sub_methods(line - [token])
+      }
+    end
+  end
+
+  # Parse sub methods like to_string, to_integer
+  def parse_sub_methods(line)
+    new_line = []
+
+    line.each do |token|
+      unless token[:type] == :IDENTIFIER
+        new_line << token
+        next
+      end
+
+      value = [line[line.index(token) + 1]]
+
+      return new_line << {
+        identifier: token,
+        value: value
+      }
+    end
   end
 end

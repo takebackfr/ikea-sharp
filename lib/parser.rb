@@ -1,5 +1,3 @@
-require_relative 'lexer'
-
 # Monkey patching for Array#split_with_token_type
 class Array
 
@@ -19,8 +17,8 @@ class Array
 end
 
 class Parser
-  def parse(code)
-    tokens = Lexer.new.tokenize(code).split_with_token_type(:NEWLINE)
+  def parse(tokens)
+    tokens = tokens.split_with_token_type(:NEWLINE)
 
     tree = []
     tokens.each do |line|
@@ -40,7 +38,7 @@ class Parser
       next unless token[:type] == :IDENTIFIER
 
       return {
-        identifier: token,
+        identifier: token[:value].to_sym,
         value: parse_sub_methods(line - [token])
       }
     end
@@ -51,17 +49,17 @@ class Parser
     new_line = []
 
     line.each do |token|
-      unless token[:type] == :IDENTIFIER
-        new_line << token
-        next
-      end
+      next unless token[:type] == :IDENTIFIER
+
 
       value = [line[line.index(token) + 1]]
-
-      return new_line << {
-        identifier: token,
+      line -= value
+      line[line.index(token)] = {
+        identifier: token[:value].to_sym,
         value: value
       }
+
+      return line
     end
   end
 end

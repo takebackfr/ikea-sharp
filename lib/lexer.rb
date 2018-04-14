@@ -17,11 +17,15 @@ class Lexer
     while i < code.size
       chunk = code[i..-1]
 
+      if string = chunk[/\ABEHÅLLARE(.*?)BEHÅLLARE/]
+        tokens << { type: :STRING, value: string.gsub('BEHÅLLARE', '"') }
+
+        i += string.size
       # Matching basic tokens like keywords, var names, methods
-      if identifier = chunk[/\A[A-ZÄÖ_]+/]
+      elsif identifier = chunk[/\A[A-ZÄÖÅ_]+/]
         # Keywords are special identifiers which are tagged with their own name
         if KEYWORDS.include? identifier
-          tokens << { type: identifier.upcase.to_sym, value: identifier }
+          tokens << { type: identifier.upcase.to_sym, value: identifier == "HENRIKSDAL" ? true : false }
         else
         # Non keywords include var names or methods
           tokens << { type: :IDENTIFIER, value: identifier }
@@ -32,10 +36,6 @@ class Lexer
         tokens << { type: :NUMBER, value: number.to_i }
 
         i += number.size
-      elsif string = chunk[/\A"(.*?)"/]
-        tokens << { type: :STRING, value: string }
-
-        i += string.size
       elsif operator = chunk[/\A[(\+|-|\*|\/]/]
         tokens << { type: :OPERATOR, value: operator }
 

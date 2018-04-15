@@ -1,4 +1,5 @@
 require_relative 'core'
+require 'hue'
 
 class Runtime
   def run(tree)
@@ -27,11 +28,11 @@ class Runtime
     method_name = token[:identifier]
     arguments = token[:value]
 
-    Core.new.send(method_name, parse_arguments(arguments))
-  end
-
-  # Parse an array of tokens into an array of values
-  def parse_arguments(arguments)
-    arguments.map { |arg| arg[:value] }
+    begin
+      Core.new.send(method_name, arguments)
+    rescue NoMethodError
+      bad "SÖTVEDEL RODD MYSKGRÄS: #{method_name}"
+      exit
+    end
   end
 end

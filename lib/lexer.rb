@@ -1,9 +1,4 @@
 class Lexer
-  # All language's keywords
-  KEYWORDS = %w(
-    HENRIKSDAL INGATROP
-  )
-
   def tokenize(code)
     # Cleanup code by remove extra line breaks
     code.chomp!
@@ -23,13 +18,7 @@ class Lexer
         i += string.size
       # Matching basic tokens like keywords, var names, methods
       elsif identifier = chunk[/\A[A-ZÄÖÅ_]+/]
-        # Keywords are special identifiers which are tagged with their own name
-        if KEYWORDS.include? identifier
-          tokens << { type: identifier.upcase.to_sym, value: identifier == "HENRIKSDAL" ? true : false }
-        else
-        # Non keywords include var names or methods
-          tokens << { type: :IDENTIFIER, value: identifier }
-        end
+        tokens << { type: :IDENTIFIER, value: identifier }
 
         i += identifier.size
       elsif number = chunk[/\A([0-9]+)/]

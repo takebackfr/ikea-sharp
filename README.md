@@ -38,8 +38,10 @@ $ cd ikea-sharp
 Write a program, then execute it
 
 ```
-$ ruby lib/ikea-sharp.rb file-name.ikea
+$ ruby lib/ikea-sharp.rb
 ```
+
+Then follow the instructions
 
 ## Documentation
 

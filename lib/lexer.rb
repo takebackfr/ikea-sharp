@@ -2,7 +2,8 @@ class Lexer
 
   KEYWORDS = [
     { keyword: :GUBBARP, value: 'true' },
-    { keyword: :SUNNERSTA, value: 'false' }
+    { keyword: :SUNNERSTA, value: 'false' },
+    { keyword: :LILLÅNGEN, value: 'gets.chomp' }
   ].freeze
 
   def tokenize(code)

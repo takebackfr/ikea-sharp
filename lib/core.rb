@@ -8,6 +8,23 @@ class Core
     puts eval(content.map { |token| token[:value] }.join)
   end
 
+  COLORS = {
+    ODGER: :white,
+    FANBYN: :black,
+    BERNHARD: :red,
+    MARTIN: :green,
+    TOBIAS: :yellow,
+    FÖLJAREN: :blue,
+    VOXNAN: :magenta,
+    SALVIKEN: :cyan
+  }
+
+  COLORS.each do |name, value|
+    define_method "TÄRNÖ_#{name}" do |content|
+      puts eval(content.map { |token| token[:value] }.join).send(value) + "".white
+    end
+  end
+
   # Sub methods
   # Convert to string
   def BENÖ(content)

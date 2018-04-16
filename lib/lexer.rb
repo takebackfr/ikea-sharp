@@ -1,4 +1,10 @@
 class Lexer
+
+  KEYWORDS = [
+    { keyword: :GUBBARP, value: 'true' },
+    { keyword: :SUNNERSTA, value: 'false' }
+  ].freeze
+
   def tokenize(code)
     # Cleanup code by remove extra line breaks
     code.chomp!
@@ -18,14 +24,22 @@ class Lexer
         i += string.size
       # Matching basic tokens like keywords, var names, methods
       elsif identifier = chunk[/\A[A-ZÄÖÅ_]+/]
-        tokens << { type: :IDENTIFIER, value: identifier }
+        if KEYWORDS.any? { |keyword| keyword[:keyword] == identifier.to_sym }
+          KEYWORDS.each do |keyword|
+            next unless keyword[:keyword] == identifier.to_sym
+
+            tokens << { type: :KEYWORD, value: keyword[:value] }
+          end
+        else
+          tokens << { type: :IDENTIFIER, value: identifier }
+        end
 
         i += identifier.size
       elsif number = chunk[/\A([0-9]+)/]
         tokens << { type: :NUMBER, value: number.to_i }
 
         i += number.size
-      elsif operator = chunk[/\A[(\+|-|\*|\/]/]
+      elsif operator = chunk[/\A[(\+|-|\*|==|\/]/]
         tokens << { type: :OPERATOR, value: operator }
 
         i += 1

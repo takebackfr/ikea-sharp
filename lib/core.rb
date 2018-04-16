@@ -29,7 +29,7 @@ class Core
   # Convert to string
   def BENÖ(content)
     # If the argument isn't an integer
-    unless content[0][:type] == :NUMBER
+    unless content[0][:type] == :NUMBER || content[0][:type] == :KEYWORD
       bad "TINGBY BOLMÅN PLATSA: #{content[0][:value]}"
       exit
     end

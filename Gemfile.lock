@@ -1,0 +1,12 @@
+GEM
+  specs:
+    hue-rb (1.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  hue-rb
+
+BUNDLED WITH
+   1.16.1

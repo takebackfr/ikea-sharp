@@ -10,7 +10,41 @@
 
 <p align="center">⚠️ This programming language is a prototype written in Ruby, use it at your own risk</p>
 
-# Ikea-sharp
+<p align="center">
+  <a href="#presentation">Presentation</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#documentation">Documentation</a> •
+  <a href="#license">License</a>
+</p>
+
+## Presentation
 Welcome in the slowest language ever made, because it is written in Ruby which is too an interpreted language.
 
-This language is only designed to disrupt you
+This language is pronounced "Ikea Sharp", and is only designed to disrupt you.
+
+## How To Use
+First of all clone the project where you want
+
+```
+$ git clone https://github.com/AnanaGame/ikea-sharp.git
+```
+
+Then go in the language folder
+
+```
+$ cd ikea-sharp
+```
+
+Write a program, then execute it
+
+```
+$ ruby lib/ikea-sharp.rb file-name.ikea
+```
+
+## Documentation
+
+The documentation soon arrives
+
+## License
+
+MIT

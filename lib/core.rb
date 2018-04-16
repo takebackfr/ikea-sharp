@@ -33,7 +33,7 @@ class Core
 
     {
       type: :NUMBER,
-      value: content[0].gsub('"', '').to_i
+      value: content[0][:value].gsub('"', '').to_i
     }
   end
 

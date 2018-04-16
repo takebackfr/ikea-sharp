@@ -33,6 +33,9 @@ class Runtime
     rescue NoMethodError
       bad "SÖTVEDEL RODD MYSKGRÄS: #{method_name}"
       exit
+    rescue SyntaxError
+      bad "MULIG VÄXER: #{method_name}"
+      exit
     end
   end
 end

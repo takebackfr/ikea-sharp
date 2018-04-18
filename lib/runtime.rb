@@ -1,6 +1,7 @@
 require_relative 'core/ikea_core'
 require_relative 'core/ikea_integer'
 require_relative 'core/ikea_string'
+require_relative 'core/ikea_file'
 require 'hue'
 
 class Runtime
@@ -9,8 +10,9 @@ class Runtime
   ].freeze
 
   SUBMETHODS = [
-    { class: 'Integer', ikea_name: :BENÖ, name: :to_string, arguments: 1 },
-    { class: 'String', ikea_name: :ISTAD, name: :to_integer, arguments: 1 }
+    { class: 'IkeaInteger', ikea_name: :BENÖ, name: :to_string, arguments: 1 },
+    { class: 'IkeaString', ikea_name: :ISTAD, name: :to_integer, arguments: 1 },
+    { class: 'IkeaFile', ikea_name: :KAFFEREP, name: :read, arguments: 1 }
   ].freeze
 
   def run(tree)
@@ -54,7 +56,7 @@ class Runtime
           exit
         end
 
-        eval "#{submethod[:class]}.new.#{submethod[:name]}(#{arguments})"
+        return eval "#{submethod[:class]}.new.#{submethod[:name]}(#{arguments})"
       end
     else
       bad "SÖTVEDEL RODD MYSKGRÄS: #{method_name}"

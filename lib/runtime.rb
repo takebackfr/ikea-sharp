@@ -1,7 +1,18 @@
-require_relative 'core'
+require_relative 'core/ikea_core'
+require_relative 'core/ikea_integer'
+require_relative 'core/ikea_string'
 require 'hue'
 
 class Runtime
+  METHODS = [
+    { class: 'IkeaCore', ikea_name: :TÄRNÖ, name: :print }
+  ].freeze
+
+  SUBMETHODS = [
+    { class: 'Integer', ikea_name: :BENÖ, name: :to_string, arguments: 1 },
+    { class: 'String', ikea_name: :ISTAD, name: :to_integer, arguments: 1 }
+  ].freeze
+
   def run(tree)
     tree.each do |line|
       value = line[:value]
@@ -28,13 +39,25 @@ class Runtime
     method_name = token[:identifier]
     arguments = token[:value]
 
-    begin
-      Core.new.send(method_name, arguments)
-    rescue NoMethodError
+    if METHODS.any? { |method| method[:ikea_name] == method_name }
+      METHODS.each do |method|
+        next unless method[:ikea_name] == method_name
+
+        eval "#{method[:class]}.new.#{method[:name]}(#{arguments})"
+      end
+    elsif SUBMETHODS.any? { |submethod| submethod[:ikea_name] == method_name }
+      SUBMETHODS.each do |submethod|
+        next unless submethod[:ikea_name] == method_name
+
+        unless arguments.size == submethod[:arguments]
+          bad "INDUSTRIELL RUNNEN: #{method_name}:#{submethod[:arguments]}"
+          exit
+        end
+
+        eval "#{submethod[:class]}.new.#{submethod[:name]}(#{arguments})"
+      end
+    else
       bad "SÖTVEDEL RODD MYSKGRÄS: #{method_name}"
-      exit
-    rescue SyntaxError
-      bad "MULIG VÄXER: #{method_name}"
       exit
     end
   end

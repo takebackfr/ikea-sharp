@@ -1,3 +1,5 @@
+require_relative 'runtime'
+
 # Monkey patching for Array#split_with_token_type
 class Array
 
@@ -51,8 +53,14 @@ class Parser
     line.each do |token|
       next unless token[:type] == :IDENTIFIER
 
+      arguments_size = 0
+      SUBMETHODS.each do |submethod|
+        next unless submethod[:ikea_name] == token[:value].to_sym
 
-      value = [line[line.index(token) + 1]]
+        arguments_size = submethod[:arguments]
+      end
+
+      value = [line[line.index(token) + arguments_size]]
       line -= value
       line[line.index(token)] = {
         identifier: token[:value].to_sym,

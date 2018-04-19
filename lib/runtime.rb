@@ -4,16 +4,17 @@ require_relative 'core/ikea_string'
 require_relative 'core/ikea_file'
 require 'hue'
 
-class Runtime
-  METHODS = [
-    { class: 'IkeaCore', ikea_name: :TÄRNÖ, name: :print }
-  ].freeze
+METHODS = [
+  { class: 'IkeaCore', ikea_name: :TÄRNÖ, name: :print }
+].freeze
 
-  SUBMETHODS = [
-    { class: 'IkeaInteger', ikea_name: :BENÖ, name: :to_string, arguments: 1 },
-    { class: 'IkeaString', ikea_name: :ISTAD, name: :to_integer, arguments: 1 },
-    { class: 'IkeaFile', ikea_name: :KAFFEREP, name: :read, arguments: 1 }
-  ].freeze
+SUBMETHODS = [
+  { class: 'IkeaInteger', ikea_name: :BENÖ, name: :to_string, arguments: 1 },
+  { class: 'IkeaString', ikea_name: :ISTAD, name: :to_integer, arguments: 1 },
+  { class: 'IkeaFile', ikea_name: :KAFFEREP, name: :read, arguments: 1 }
+].freeze
+
+class Runtime
 
   def run(tree)
     tree.each do |line|
@@ -21,7 +22,7 @@ class Runtime
 
       value.each do |token|
         unless token[:identifier].nil?
-          # Execute an replace the sub method
+          # Execute and replace the sub method
           value[value.index(token)] = exec_method(token)
         end
       end

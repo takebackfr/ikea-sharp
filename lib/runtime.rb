@@ -5,7 +5,8 @@ require_relative 'core/ikea_file'
 require 'hue'
 
 METHODS = [
-  { class: 'IkeaCore', ikea_name: :TÄRNÖ, name: :print }
+  { class: 'IkeaCore', ikea_name: :TÄRNÖ, name: :print },
+  { class: 'IkeaFile', ikea_name: :FYRESDAL, name: :write }
 ].freeze
 
 SUBMETHODS = [

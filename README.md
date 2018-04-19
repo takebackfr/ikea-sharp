@@ -45,7 +45,19 @@ Then follow the instructions
 
 ## Documentation
 
-The documentation soon arrives
+### Methods
+* TÄRNÖ String : prints in the console
+* BENÖ Integer : convert an integer to a string
+* ISTAD String : convert a string to an integer
+* KAFFEREP String : read the content of a file
+* FYRESDAL String(File name) String(New file content) : write the content of a file 
+
+### Errors
+* INDUSTRIELL RUNNEN: method_name:arguments : You use the wrong size of arguments
+* SÖTVEDEL RODD MYSKGRÄS: method_name : This method does not exist
+* TINGBY BOLMÅN INDUSTRIELL: value : The value must be a string
+* TINGBY BOLMÅN PLATSA: value : The value must be an integer
+* KALLARP VOXTORP EKESTAD: file_name : This file does not exist
 
 ## License
 

@@ -35,6 +35,12 @@ Then go in the language folder
 $ cd ikea-sharp
 ```
 
+Install the dependencies
+
+```
+$ bundle install
+```
+
 Write a program, then execute it
 
 ```
